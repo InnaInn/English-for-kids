@@ -1,0 +1,269 @@
+body {
+	margin: 0;
+	background: #23a6d5;
+
+}
+
+.headerContainer{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 85%;
+	height: 45px;
+	max-width: 1350px;
+	margin: 40px auto 0;
+}
+
+.headerLogo a{
+	font-family: 'Pacifico', cursive;
+	font-weight: normal;
+	font-size: 3.5rem;
+	color: #ffffff;
+	text-shadow: 0px 3px 3px #30296f;
+	transition: 0.3s ease;
+	text-decoration: none;
+
+}
+.menu-btn {
+	width: 40px;
+	height: 40px;
+	position: relative;
+	z-index:2;
+	overflow: hidden;
+	cursor: pointer;
+	left: 10%;
+    bottom: -15%;
+}
+.menu-btn span {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #ffffff;
+	transition: all 0.5s;
+	border-radius: 10px
+}
+.menu-btn span:nth-of-type(2) {
+	top: calc(50% - 10px);
+}
+.menu-btn span:nth-of-type(3) {
+	top: calc(50% + 10px);
+}
+
+.menu {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 20%;
+	height: 100%;
+	padding: 15px;
+  background: #FF8C00;
+	transform: translateX(-100%);
+	transition: transform 0.5s; 
+}
+.menu.active {
+	transform: translateX(0);
+}
+.menu li {
+	list-style-type: none;
+} 
+
+.menu-btn.active span:nth-of-type(1) {
+  display: none;
+}
+.menu-btn.active span:nth-of-type(2) {
+  top: 50%;
+  transform: translate(-50%, 0%) rotate(45deg);  
+}
+.menu-btn.active span:nth-of-type(3) {
+  top: 50%;
+  transform: translate(-50%, 0%) rotate(-45deg); 
+}
+
+.menuItem  {
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem;
+    height: 60px;
+    cursor: pointer;
+        
+}
+
+.menuLink {
+	padding-left: 15px;
+
+}
+
+.headerButton {
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.3s ease;
+}
+
+#switchInput {
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+.toggleInput{
+	position: relative;
+    cursor: pointer;
+    display: inline-block;
+    width: 100px;
+    height: 43px;
+    background: #24d7f7;
+    border-radius: 50px;
+    transition: 500ms;
+    overflow: hidden;
+}
+
+.switchHendle {
+	   position: absolute;
+    display: inline-block;
+    top: 4px;
+    left: 4px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #ffffff;
+    overflow: hidden;
+    transition: all 500ms ease-out;
+}
+
+.switchTrain{
+	color: white;
+    position: relative;
+    top: 12px;
+    left: 45px;
+     font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    transition: 0.5s ease;
+}
+
+.switchPlay {
+	display: none;
+    transition: 0.5s ease;
+}
+
+.openStats {
+	text-align: center;
+    line-height: 2.6rem;
+    margin-left: 20px;
+    width: 68px;
+    display: block;
+    height: 43px;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    background-color: #23d5ab;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    box-shadow: 1px 2px 0px #209b7e;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    text-decoration: none;
+}
+
+.mainContainer{
+	width: 85vw;
+    margin: 0 auto;
+    margin-top: 20px;
+    max-width: 1399px;
+}
+
+.cardsContainer{
+	display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px
+}
+
+.cardsItem{
+	background: white;
+    width: 340px;
+    display: inline-block;
+    margin: 15px;
+    border-radius: 19px;
+    position: relative;
+    box-shadow: -1px 15px 30px -12px black;
+    z-index: 1;
+    transition: 0.5s ease;
+    cursor: pointer;
+
+}
+
+.cardsItem:hover{
+    transform: translateY(-5px) scale(1.005) translateZ(0);
+    box-shadow: 5px 6px 17px #24d7f7;
+}
+
+.cardsTitle{
+	font-size: 1.8rem;
+    text-transform: uppercase;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: normal;
+    letter-spacing: 0.15em;
+    text-align: center;
+    color: #30296f;
+    line-height: 2.8rem;
+    background-image: linear-gradient(180deg, #FF8C00 7px, #fff 7px);
+    padding: 10px 10px;
+    border-radius: 5px;
+
+}
+
+.cardsTitleOne{
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: normal;
+    letter-spacing: 0.15em;
+    text-align: center;
+    color: #30296f;
+    line-height: 2.8rem;
+    padding: 10px 10px;
+    border-radius: 5px;
+}
+
+.imgDescription{
+    padding-top: 20px;
+}
+
+.cardsImage {
+    position: relative;
+    height: 180px;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+}
+
+
+
+.cardsImageAction{
+	background: #346bbc;
+	display: flex;
+    justify-content: center;
+
+}
+
+.cardsImageActionOne{
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.bottomInfo{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
