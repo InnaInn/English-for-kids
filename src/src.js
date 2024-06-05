@@ -8,11 +8,58 @@ import cards from "./cards";
 
 let menuBtn = document.querySelector('.menu-btn');
 let menu = document.querySelector('.menu');
-menuBtn.addEventListener('click', function () {
+let popup = document.querySelector('.wrapperPopup');
+let dontShowAgainCheckbox = document.getElementById('dontShowAgain');
+let closePopupButton = document.getElementById('closePopup');
+closePopupButton.addEventListener('click', closePopup);
+let overlay = document.createElement('div');
+let playPanel = document.querySelector('.playPanel');
+let startGameBtn = document.querySelector('.startGame');
+let repeatSoundBtn = document.querySelector('.repeatSound');
+let starsBlock = document.querySelector('.stars');
+
+let lastWord = null;
+let lastAudio = null;
+
+overlay.classList.add('overlay');
+document.body.appendChild(overlay);
+
+
+function toggleMenu() {
     menuBtn.classList.toggle('active');
     menu.classList.toggle('active');
-})
+}
 
+function closeMenu() {
+    menu.classList.remove('active');
+    menuBtn.classList.remove('active');
+}
+
+function openPlayPanel() {
+    playPanel.classList.add('enable');
+}
+
+function removePlayPanel() {
+    playPanel.classList.remove('enable');
+}
+
+function collapseCards() {
+    document.querySelectorAll('.cardsItem').forEach(e => e.classList.add('collapsed'));
+}
+
+function expandCards() {
+    document.querySelectorAll('.cardsItem').forEach(e => e.classList.remove('collapsed'));
+}
+
+menuBtn.addEventListener('click', function () {
+    toggleMenu();
+});
+
+document.addEventListener('click', function (e) {
+    if (menu.classList.contains('active') && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+        toggleMenu();
+    }
+});
 const cardsContainer = document.querySelector('.cardsContainer');
 const cardsMappings = [];
 let cardSections = cards[0];
@@ -25,9 +72,13 @@ function renderContent() {
     let hash = window.location.hash;
     if (hash.startsWith('#section-')) {
         let sectionIndex = hash.substring(9);
-        renderCards(sectionIndex)
+        renderCards(sectionIndex);
+        if (getCurrentMode() === "play") {
+            openPlayPanel();
+        }
     } else {
         renderSections();
+        removePlayPanel();
     }
 }
 
@@ -40,13 +91,17 @@ function renderSections() {
         cardsItem.innerHTML = `
             <a class="linkCard" href="#section-${i}">
                 <div class="cardsImage cardsImageAction">
-                    <img src="assets/${mapping.items[0].image}"  alt="img">
+                    <img src="assets/${mapping.items[0].image}"  alt="img" width="240px" ">
                 </div>
                 <div class="cardsTitle">${mapping.title}</div>
             </a>
         `
         cardsContainer.append(cardsItem);
     }
+}
+
+function getCurrentMode() {
+    return localStorage.getItem("playMode");
 }
 
 function renderCards(sectionIndex) {
@@ -56,25 +111,63 @@ function renderCards(sectionIndex) {
             let cardsItem = document.createElement('div');
             let audioImageId = `myImageForAudio-${card.word}`;
             let audioId = `myAudio-${card.word}`;
+            let cardsRotateId = `rotateId-${card.word}`;
+            //let containerRotate = `containerRotate-${card.word}`;
+            let cardItemId = `card-${card.word}`;
+            let imageId = `image-${card.word}`;
             cardsItem.classList.add('cardsItem');
+            if (getCurrentMode() === "play") {
+               cardsItem.classList.add("collapsed")
+            }
+            cardsItem.setAttribute("id", cardItemId)
             cardsItem.innerHTML = `
-                <a class="linkCard">
-                    <div class="cardsImage cardsImageActionOne">
-                        <img  class="imgDescription" src="assets/${card.image}"  alt="img">
+                <div class="cardContent">
+                    <div class="front">
+                        <div class="cardsImage cardsImageActionOne">
+                            <img id="${imageId}" class="imgDescription" src="assets/${card.image}" alt="img" >
+                        </div>
+                        <div class="bottomInfo">
+                            <div class="soundBtn">
+                                <img id="${audioImageId}" src="assets/img/audio.png" width="30px" height="30px">
+                            </div>
+                            <audio id="${audioId}">
+                                <source src="assets/${card.audioSrc}" type="audio/mp3">
+                            </audio>
+                            <div class="cardsTitleOne">${card.word}</div>
+                            <div class="infoBtn">
+                                <img id="${cardsRotateId}" src="assets/img/rotate.png" width="30px" height="30px">
+                            </div>
+                        </div>
                     </div>
-                    <div class="bottomInfo">
-                    <div class="soundBtn"><img id="${audioImageId}" src="assets/img/audio.png" width="30px" height="30px"></div>
-                    <audio id="${audioId}">
-                    <source src="assets/${card.audioSrc}" type="audio/mp3">
-                     </audio>
-                    <div class="cardsTitleOne">${card.word}</div>
-                    <div class="infoBtn"><img src="assets/img/rotate.png" width="30px" height="30px"></div>
+                    <div class="back">
+                        <div class="cardsImage cardsImageActionOne">
+                            <img class="imgDescription" src="assets/${card.image}" alt="img">
+                        </div>
+                        <div class="bottomInfo">
+                            <div class="cardsTitleOne">${card.translation}</div>
+                            <div class="infoBtn">
+                                <img id="${cardsRotateId}-back" src="assets/img/rotate.png" width="30px" height="30px">
+                            </div>
+                        </div>
                     </div>
-                </a>
+                </div>
             `
             cardsContainer.append(cardsItem);
+            document.getElementById(cardsRotateId).addEventListener('click',
+                () => document.getElementById(cardItemId).classList.add("rotate"));
+            document.getElementById(cardsRotateId + "-back").addEventListener('click',
+                () => document.getElementById(cardItemId).classList.remove("rotate"));
             document.getElementById(audioImageId).addEventListener('click',
                 () => document.getElementById(audioId).play());
+            document.getElementById(imageId).addEventListener('click', () => {
+                let starItem = document.createElement('span');
+                if (lastWord === card.word) {
+                    starItem.classList.add('correctAnswer');
+                } else {
+                    starItem.classList.add('wrongAnswer');
+                }
+                starsBlock.append(starItem);
+            });
         }
     } else {
         window.location.hash = '';
@@ -84,4 +177,78 @@ function renderCards(sectionIndex) {
 renderContent()
 window.addEventListener('hashchange', () => {
     renderContent()
+    closeMenu()
 });
+
+function isSectionPageOpen() {
+    let hash = window.location.hash;
+    return hash.startsWith('#section-')
+}
+
+function infoPopupShouldBeShown() {
+    let dontShowPopup = localStorage.getItem('dontShowPopup');
+    return !(dontShowPopup === 'true');
+}
+
+function openInfoPopup() {
+    overlay.style.display = 'block';
+    popup.classList.remove('hidden')
+}
+
+function closePopup() {
+    let hash = window.location.hash;
+    if (dontShowAgainCheckbox.checked && hash.startsWith('#section-')) {
+        localStorage.setItem('dontShowPopup', 'true');
+    }
+    overlay.style.display = 'none';
+    popup.classList.add('hidden');
+}
+
+let playSwitch = document.getElementById('switchInput');
+if (getCurrentMode() === "play") {
+    playSwitch.checked = true;
+}
+
+playSwitch.addEventListener('change', function () {
+    if (this.checked) {
+        document.body.classList.add('alternate-background');
+        if (isSectionPageOpen()) {
+            openPlayPanel();
+            collapseCards();
+        } else if (infoPopupShouldBeShown()) {
+            openInfoPopup()
+        }
+    } else {
+        document.body.classList.remove('alternate-background');
+        removePlayPanel();
+        expandCards();
+    }
+    localStorage.setItem("playMode", this.checked ? "play" : "train");
+});
+
+/*play*/
+function playRandomAudio() {
+    let hash = window.location.hash;
+    let sectionIndex = hash.substring(9);
+    if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
+        let cards = cardsMappings[sectionIndex].items;
+        const randomIndex = Math.floor(Math.random() * cards.length);
+        let randomCard = cards[randomIndex];
+        lastWord = randomCard.word;
+        lastAudio = new Audio("assets/" + randomCard.audioSrc);
+        lastAudio.play();
+
+        startGameBtn.classList.add('disabled');
+        repeatSoundBtn.classList.remove('disabled');
+    }
+}
+
+function repeatRandomAudio() {
+    if (lastAudio) {
+        lastAudio.play();
+    }
+}
+
+startGameBtn.addEventListener('click', playRandomAudio);
+repeatSoundBtn.addEventListener('click', repeatRandomAudio);
+
