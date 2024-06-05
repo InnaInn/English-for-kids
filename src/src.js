@@ -13,6 +13,14 @@ let dontShowAgainCheckbox = document.getElementById('dontShowAgain');
 let closePopupButton = document.getElementById('closePopup');
 closePopupButton.addEventListener('click', closePopup);
 let overlay = document.createElement('div');
+let playPanel = document.querySelector('.playPanel');
+let startGameBtn = document.querySelector('.startGame');
+let repeatSoundBtn = document.querySelector('.repeatSound');
+let starsBlock = document.querySelector('.stars');
+
+let lastWord = null;
+let lastAudio = null;
+
 overlay.classList.add('overlay');
 document.body.appendChild(overlay);
 
@@ -25,6 +33,22 @@ function toggleMenu() {
 function closeMenu() {
     menu.classList.remove('active');
     menuBtn.classList.remove('active');
+}
+
+function openPlayPanel() {
+    playPanel.classList.add('enable');
+}
+
+function removePlayPanel() {
+    playPanel.classList.remove('enable');
+}
+
+function collapseCards() {
+    document.querySelectorAll('.cardsItem').forEach(e => e.classList.add('collapsed'));
+}
+
+function expandCards() {
+    document.querySelectorAll('.cardsItem').forEach(e => e.classList.remove('collapsed'));
 }
 
 menuBtn.addEventListener('click', function () {
@@ -48,9 +72,13 @@ function renderContent() {
     let hash = window.location.hash;
     if (hash.startsWith('#section-')) {
         let sectionIndex = hash.substring(9);
-        renderCards(sectionIndex)
+        renderCards(sectionIndex);
+        if (getCurrentMode() === "play") {
+            openPlayPanel();
+        }
     } else {
         renderSections();
+        removePlayPanel();
     }
 }
 
@@ -72,6 +100,10 @@ function renderSections() {
     }
 }
 
+function getCurrentMode() {
+    return localStorage.getItem("playMode");
+}
+
 function renderCards(sectionIndex) {
     cardsContainer.innerHTML = '';
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
@@ -82,13 +114,17 @@ function renderCards(sectionIndex) {
             let cardsRotateId = `rotateId-${card.word}`;
             //let containerRotate = `containerRotate-${card.word}`;
             let cardItemId = `card-${card.word}`;
+            let imageId = `image-${card.word}`;
             cardsItem.classList.add('cardsItem');
+            if (getCurrentMode() === "play") {
+               cardsItem.classList.add("collapsed")
+            }
             cardsItem.setAttribute("id", cardItemId)
             cardsItem.innerHTML = `
                 <div class="cardContent">
                     <div class="front">
                         <div class="cardsImage cardsImageActionOne">
-                            <img class="imgDescription" src="assets/${card.image}" alt="img" >
+                            <img id="${imageId}" class="imgDescription" src="assets/${card.image}" alt="img" >
                         </div>
                         <div class="bottomInfo">
                             <div class="soundBtn">
@@ -123,6 +159,15 @@ function renderCards(sectionIndex) {
                 () => document.getElementById(cardItemId).classList.remove("rotate"));
             document.getElementById(audioImageId).addEventListener('click',
                 () => document.getElementById(audioId).play());
+            document.getElementById(imageId).addEventListener('click', () => {
+                let starItem = document.createElement('span');
+                if (lastWord === card.word) {
+                    starItem.classList.add('correctAnswer');
+                } else {
+                    starItem.classList.add('wrongAnswer');
+                }
+                starsBlock.append(starItem);
+            });
         }
     } else {
         window.location.hash = '';
@@ -135,36 +180,75 @@ window.addEventListener('hashchange', () => {
     closeMenu()
 });
 
-function playPopupShouldBeShown() {
+function isSectionPageOpen() {
     let hash = window.location.hash;
-    let dontShowPopup = localStorage.getItem('dontShowPopup');
-    return !(dontShowPopup === 'true' || hash.startsWith('#section-'));
+    return hash.startsWith('#section-')
 }
 
-function openPopup() {
+function infoPopupShouldBeShown() {
+    let dontShowPopup = localStorage.getItem('dontShowPopup');
+    return !(dontShowPopup === 'true');
+}
+
+function openInfoPopup() {
     overlay.style.display = 'block';
     popup.classList.remove('hidden')
 }
 
 function closePopup() {
-    if (dontShowAgainCheckbox.checked) {
+    let hash = window.location.hash;
+    if (dontShowAgainCheckbox.checked && hash.startsWith('#section-')) {
         localStorage.setItem('dontShowPopup', 'true');
     }
     overlay.style.display = 'none';
     popup.classList.add('hidden');
 }
 
-document.getElementById('switchInput').addEventListener('change', function () {
+let playSwitch = document.getElementById('switchInput');
+if (getCurrentMode() === "play") {
+    playSwitch.checked = true;
+}
+
+playSwitch.addEventListener('change', function () {
     if (this.checked) {
         document.body.classList.add('alternate-background');
-
-        if (playPopupShouldBeShown()) {
-            openPopup()
+        if (isSectionPageOpen()) {
+            openPlayPanel();
+            collapseCards();
+        } else if (infoPopupShouldBeShown()) {
+            openInfoPopup()
         }
     } else {
         document.body.classList.remove('alternate-background');
+        removePlayPanel();
+        expandCards();
     }
+    localStorage.setItem("playMode", this.checked ? "play" : "train");
 });
 
+/*play*/
+function playRandomAudio() {
+    let hash = window.location.hash;
+    let sectionIndex = hash.substring(9);
+    if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
+        let cards = cardsMappings[sectionIndex].items;
+        const randomIndex = Math.floor(Math.random() * cards.length);
+        let randomCard = cards[randomIndex];
+        lastWord = randomCard.word;
+        lastAudio = new Audio("assets/" + randomCard.audioSrc);
+        lastAudio.play();
 
+        startGameBtn.classList.add('disabled');
+        repeatSoundBtn.classList.remove('disabled');
+    }
+}
+
+function repeatRandomAudio() {
+    if (lastAudio) {
+        lastAudio.play();
+    }
+}
+
+startGameBtn.addEventListener('click', playRandomAudio);
+repeatSoundBtn.addEventListener('click', repeatRandomAudio);
 

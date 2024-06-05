@@ -251,6 +251,14 @@ body.alternate-background {
     transform-style: preserve-3d;
 }
 
+.cardsItem.collapsed {
+    height: 180px;
+    transition: height 0.5s;
+}
+
+.cardsItem.collapsed .bottomInfo {
+    visibility: hidden;
+}
 
 .cardsItem:hover{
     box-shadow: 5px 6px 17px #24d7f7;
@@ -297,7 +305,6 @@ body.alternate-background {
 }
 
 .cardsImageAction {
-
     display: flex;
     justify-content: center;
 }
@@ -428,3 +435,88 @@ body.alternate-background {
     display: none;
 }
 
+.playPanel{
+    width: 90px;
+    height: 185px;
+    position: fixed;
+    z-index: 10;
+    top: 150px;
+    right: -120px;
+    border-top-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    background: #f64c72;
+    border-right: none;
+    box-shadow: 5px 6px 17px #24d7f7;
+    transition: 0.5s ease;
+}
+
+.playPanel.enable {
+    right: 0;
+}
+
+
+.startGame {
+    background-image: url(https://svgshare.com/i/KDD.svg);
+    background-color: #6c5abf;
+}
+
+.repeatSound {
+    background-image: url(https://svgshare.com/i/KBy.svg);
+    background-color: #24d7f7;
+}
+
+.repeatSound.disabled {
+    background-color: gray;
+    pointer-events: none;
+}
+.startGame.disabled {
+    background-color: gray;
+    pointer-events: none;
+}
+.startGame, .repeatSound{
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 30%;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;
+    background-repeat: no-repeat;
+    background-size: 35px;
+    background-position: center;
+    box-shadow: 0px 4px #4a3d82;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.stars{
+    height: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    overflow-x: hidden;
+    padding-top: 12px;
+
+}
+
+.wrongAnswer{
+    background-image: url(https://svgshare.com/i/KD3.svg)
+}
+
+.correctAnswer{
+    background-image: url(https://svgshare.com/i/KCh.svg);
+}
+
+.wrongAnswer, .correctAnswer {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+    flex-shrink: 0;
+    background-size: contain;
+    background-position: center;
+}
