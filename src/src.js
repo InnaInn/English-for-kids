@@ -17,6 +17,8 @@ let playPanel = document.querySelector('.playPanel');
 let startGameBtn = document.querySelector('.startGame');
 let repeatSoundBtn = document.querySelector('.repeatSound');
 let starsBlock = document.querySelector('.stars');
+let audioRight = document.getElementById('audioRight');
+let audioWrong = document.getElementById('audioWrong');
 
 let lastWord = null;
 let lastAudio = null;
@@ -104,6 +106,20 @@ function getCurrentMode() {
     return localStorage.getItem("playMode");
 }
 
+function checkUserChoiceForWord(card) {
+    let starItem = document.createElement('span');
+    if (lastWord === card.word) {
+        starItem.classList.add('correctAnswer');
+        audioRight.play();
+        lastWord = null;
+        document.getElementById(`card-${card.word}`).classList.add('inactiveCard');
+    } else {
+        starItem.classList.add('wrongAnswer');
+        audioWrong.play();
+    }
+    starsBlock.append(starItem);
+}
+
 function renderCards(sectionIndex) {
     cardsContainer.innerHTML = '';
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
@@ -159,14 +175,11 @@ function renderCards(sectionIndex) {
                 () => document.getElementById(cardItemId).classList.remove("rotate"));
             document.getElementById(audioImageId).addEventListener('click',
                 () => document.getElementById(audioId).play());
-            document.getElementById(imageId).addEventListener('click', () => {
-                let starItem = document.createElement('span');
-                if (lastWord === card.word) {
-                    starItem.classList.add('correctAnswer');
-                } else {
-                    starItem.classList.add('wrongAnswer');
+            document.getElementById(imageId).addEventListener('click', (event) => {
+                let cardItem = event.target.closest(".cardsItem");
+                if (lastWord != null && !cardItem.classList.contains("inactiveCard")) {
+                    checkUserChoiceForWord(card);
                 }
-                starsBlock.append(starItem);
             });
         }
     } else {
@@ -178,6 +191,7 @@ renderContent()
 window.addEventListener('hashchange', () => {
     renderContent()
     closeMenu()
+    resetGame();
 });
 
 function isSectionPageOpen() {
@@ -196,8 +210,7 @@ function openInfoPopup() {
 }
 
 function closePopup() {
-    let hash = window.location.hash;
-    if (dontShowAgainCheckbox.checked && hash.startsWith('#section-')) {
+    if (dontShowAgainCheckbox.checked) {
         localStorage.setItem('dontShowPopup', 'true');
     }
     overlay.style.display = 'none';
@@ -207,6 +220,14 @@ function closePopup() {
 let playSwitch = document.getElementById('switchInput');
 if (getCurrentMode() === "play") {
     playSwitch.checked = true;
+}
+
+function resetGame() {
+    starsBlock.innerHTML = '';
+    startGameBtn.classList.remove('disabled');
+    repeatSoundBtn.classList.add('disabled');
+    lastWord = null;
+    lastAudio = null;
 }
 
 playSwitch.addEventListener('change', function () {
@@ -222,24 +243,40 @@ playSwitch.addEventListener('change', function () {
         document.body.classList.remove('alternate-background');
         removePlayPanel();
         expandCards();
+        resetGame();
     }
     localStorage.setItem("playMode", this.checked ? "play" : "train");
 });
 
 /*play*/
-function playRandomAudio() {
+let currentGameCards;
+function startGame() {
     let hash = window.location.hash;
     let sectionIndex = hash.substring(9);
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
-        let cards = cardsMappings[sectionIndex].items;
-        const randomIndex = Math.floor(Math.random() * cards.length);
-        let randomCard = cards[randomIndex];
-        lastWord = randomCard.word;
-        lastAudio = new Audio("assets/" + randomCard.audioSrc);
-        lastAudio.play();
+        currentGameCards = Array.from(cardsMappings[sectionIndex].items);
+    }
+    startGameBtn.classList.add('disabled');
+    repeatSoundBtn.classList.remove('disabled');
+    continueGame();
+}
 
-        startGameBtn.classList.add('disabled');
-        repeatSoundBtn.classList.remove('disabled');
+function playRandomAudio() {
+    const randomIndex = Math.floor(Math.random() * currentGameCards.length);
+    let randomCard = currentGameCards[randomIndex];
+    lastWord = randomCard.word;
+    lastAudio = new Audio("assets/" + randomCard.audioSrc);
+    // noinspection JSIgnoredPromiseFromCall
+    lastAudio.play();
+    currentGameCards.splice(randomIndex, 1);
+}
+
+/*Доделать*/
+function continueGame() {
+    if (currentGameCards === undefined || currentGameCards.length === 0) {
+        alert("Finished");
+    } else {
+        playRandomAudio();
     }
 }
 
@@ -249,6 +286,6 @@ function repeatRandomAudio() {
     }
 }
 
-startGameBtn.addEventListener('click', playRandomAudio);
+startGameBtn.addEventListener('click', startGame);
 repeatSoundBtn.addEventListener('click', repeatRandomAudio);
-
+audioRight.addEventListener('ended', continueGame);

@@ -105,8 +105,6 @@ body.alternate-background {
     font-family: "Poppins", sans-serif;
     font-size: 1.4rem;
     height: 60px;
-    cursor: pointer;
-
 }
 
 
@@ -115,7 +113,7 @@ body.alternate-background {
     color: white;
     text-decoration: none;
     font-family: "Poppins", sans-serif;
-
+    cursor: pointer;
 }
 
 .headerButton {
@@ -519,4 +517,12 @@ body.alternate-background {
     flex-shrink: 0;
     background-size: contain;
     background-position: center;
+}
+
+.inactiveCard {
+    opacity: 0.33;
+}
+
+.inactiveCard .cardContent {
+    cursor: default;
 }
