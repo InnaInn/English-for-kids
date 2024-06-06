@@ -19,7 +19,13 @@ let repeatSoundBtn = document.querySelector('.repeatSound');
 let starsBlock = document.querySelector('.stars');
 let audioRight = document.getElementById('audioRight');
 let audioWrong = document.getElementById('audioWrong');
+let blockPopupCorrect = document.querySelector('.wrapperPopupCorrect');
+let blockPopupWrong = document.querySelector('.wrapperPopupWrong');
+let musicSuccess = document.getElementById('musicSuccess');
+let musicFailure = document.getElementById('musicFailure');
 
+
+let errors = 0;
 let lastWord = null;
 let lastAudio = null;
 
@@ -116,6 +122,7 @@ function checkUserChoiceForWord(card) {
     } else {
         starItem.classList.add('wrongAnswer');
         audioWrong.play();
+        errors++;
     }
     starsBlock.append(starItem);
 }
@@ -244,6 +251,8 @@ playSwitch.addEventListener('change', function () {
         removePlayPanel();
         expandCards();
         resetGame();
+        document.querySelectorAll('.cardsItem')
+            .forEach(cardContentDiv => cardContentDiv.classList.remove('inactiveCard'));
     }
     localStorage.setItem("playMode", this.checked ? "play" : "train");
 });
@@ -251,6 +260,7 @@ playSwitch.addEventListener('change', function () {
 /*play*/
 let currentGameCards;
 function startGame() {
+    errors = 0;
     let hash = window.location.hash;
     let sectionIndex = hash.substring(9);
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
@@ -261,7 +271,7 @@ function startGame() {
     continueGame();
 }
 
-function playRandomAudio() {
+function playNextCard() {
     const randomIndex = Math.floor(Math.random() * currentGameCards.length);
     let randomCard = currentGameCards[randomIndex];
     lastWord = randomCard.word;
@@ -271,12 +281,40 @@ function playRandomAudio() {
     currentGameCards.splice(randomIndex, 1);
 }
 
+function showPopupCorrect() {
+    blockPopupCorrect.classList.remove('hidden');
+    musicSuccess.play();
+    setTimeout(function () {
+        blockPopupCorrect.classList.add('hidden');
+        window.location.href = '#';
+    }, 3000);
+}
+
+function showPopupWrong() {
+    blockPopupWrong.classList.remove('hidden');
+    musicFailure.play();
+    setTimeout(function () {
+        blockPopupWrong.classList.add('hidden');
+        window.location.href = '#';
+    },3000);
+}
+
+function finishGame() {
+    let numberOfErrors = document.getElementById('numberOfErrors');
+    if (errors > 0) {
+        showPopupWrong();
+    } else {
+        showPopupCorrect();
+    }
+    numberOfErrors.textContent = errors;
+}
+
 /*Доделать*/
 function continueGame() {
-    if (currentGameCards === undefined || currentGameCards.length === 0) {
-        alert("Finished");
+    if (currentGameCards.length === 0) {
+        finishGame();
     } else {
-        playRandomAudio();
+        playNextCard();
     }
 }
 

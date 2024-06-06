@@ -262,8 +262,6 @@ body.alternate-background {
     box-shadow: 5px 6px 17px #24d7f7;
 }
 
-
-
 .cardsTitle {
     font-size: 1.8rem;
     font-family: "Poppins", sans-serif;
@@ -274,8 +272,6 @@ body.alternate-background {
     background-image: linear-gradient(180deg, #f64c72 7px, #fff 1px);
     padding: 10px 10px;
     border-radius: 5px;
-
-
 }
 
 .linkCard{
@@ -292,8 +288,6 @@ body.alternate-background {
     padding: 10px 10px;
     border-radius: 5px;
 }
-
-
 
 .cardsImage {
     position: relative;
@@ -325,14 +319,11 @@ body.alternate-background {
 
 .back {
     transform: rotateY(180deg);
-
-
 }
 
 .front, .back {
     backface-visibility: hidden;
     position: absolute;
-
 }
 
 .cardContent {
@@ -343,7 +334,7 @@ body.alternate-background {
     cursor: pointer;
 }
 
-.soundBtn{
+.soundBtn {
     background: #f64c72;
     left: 0;
     bottom: 0;
@@ -353,7 +344,7 @@ body.alternate-background {
     padding: 10px 5px 5px 5px;
 }
 
-.infoBtn{
+.infoBtn {
     background: #f64c72;
     position: absolute;
     right: 0;
@@ -375,7 +366,6 @@ body.alternate-background {
     text-align: center;
     height: 200px;
     width: 500px;
-
 }
 
 .headerPopup{
@@ -525,4 +515,30 @@ body.alternate-background {
 
 .inactiveCard .cardContent {
     cursor: default;
+}
+
+.blockPopupCorrect, .blockPopupWrong {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f64c72;
+    z-index: 11;
+    border-radius: 20px;
+    text-align: center;
+    height: 500px;
+    width: 600px;
+}
+
+.headerPopupCorrect, .headerPopupWrong{
+    font-family: 'Pacifico', cursive;
+    font-size: 48px;
+    color: white;
+
+}
+
+.textPopupCorrect, .textPopupWrong{
+    font-family: "Poppins", sans-serif;
+    font-size: 25px;
+    color: white;
 }
