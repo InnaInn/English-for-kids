@@ -303,4 +303,11 @@ const cards = [
     ]
 ]
 
-export default cards;
+const cardsMappings = [];
+let cardSections = cards[0];
+
+for (let i = 0; i < cardSections.length; i++) {
+    cardsMappings[i] = {title: cardSections[i], items: cards[i + 1]};
+}
+
+export default cardsMappings;

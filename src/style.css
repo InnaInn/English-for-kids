@@ -427,7 +427,7 @@ body.alternate-background {
     width: 90px;
     height: 185px;
     position: fixed;
-    z-index: 10;
+    z-index: 9;
     top: 150px;
     right: -120px;
     border-top-left-radius: 20px;
@@ -542,3 +542,4 @@ body.alternate-background {
     font-size: 25px;
     color: white;
 }
+
