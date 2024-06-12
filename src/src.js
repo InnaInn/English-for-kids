@@ -1,9 +1,12 @@
 import './normalize.css';
 import './index.html';
 import './style.css';
+import './statistic.css';
+import './statistic.js';
 import './cards.js';
 import "@babel/polyfill";
-import cards from "./cards";
+import cardsMappings from "./cards";
+import {increaseStatistic, renderStatistics, closeStatistic} from './statistic.js'
 
 
 let menuBtn = document.querySelector('.menu-btn');
@@ -52,7 +55,10 @@ function removePlayPanel() {
 }
 
 function collapseCards() {
-    document.querySelectorAll('.cardsItem').forEach(e => e.classList.add('collapsed'));
+    document.querySelectorAll('.cardsItem').forEach(e => {
+        e.classList.add('collapsed');
+        e.classList.remove('rotate');
+    });
 }
 
 function expandCards() {
@@ -69,12 +75,6 @@ document.addEventListener('click', function (e) {
     }
 });
 const cardsContainer = document.querySelector('.cardsContainer');
-const cardsMappings = [];
-let cardSections = cards[0];
-
-for (let i = 0; i < cardSections.length; i++) {
-    cardsMappings[i] = {title: cardSections[i], items: cards[i + 1]};
-}
 
 function renderContent() {
     let hash = window.location.hash;
@@ -84,9 +84,13 @@ function renderContent() {
         if (getCurrentMode() === "play") {
             openPlayPanel();
         }
+        closeStatistic();
+    } else if (hash.startsWith('#statistics')) {
+        renderStatistics();
     } else {
         renderSections();
         removePlayPanel();
+        closeStatistic();
     }
 }
 
@@ -112,17 +116,20 @@ function getCurrentMode() {
     return localStorage.getItem("playMode");
 }
 
-function checkUserChoiceForWord(card) {
+function checkUserChoiceForWord(categoryTitle, card) {
+    let word = card.word;
     let starItem = document.createElement('span');
-    if (lastWord === card.word) {
+    if (lastWord === word) {
         starItem.classList.add('correctAnswer');
         audioRight.play();
         lastWord = null;
-        document.getElementById(`card-${card.word}`).classList.add('inactiveCard');
+        document.getElementById(`card-${word}`).classList.add('inactiveCard');
+        increaseStatistic(categoryTitle, word, 'correct');
     } else {
         starItem.classList.add('wrongAnswer');
         audioWrong.play();
         errors++;
+        increaseStatistic(categoryTitle, word, 'incorrect');
     }
     starsBlock.append(starItem);
 }
@@ -130,14 +137,16 @@ function checkUserChoiceForWord(card) {
 function renderCards(sectionIndex) {
     cardsContainer.innerHTML = '';
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
+        let categoryTitle = cardsMappings[sectionIndex].title;
         for (let card of cardsMappings[sectionIndex].items) {
             let cardsItem = document.createElement('div');
-            let audioImageId = `myImageForAudio-${card.word}`;
-            let audioId = `myAudio-${card.word}`;
-            let cardsRotateId = `rotateId-${card.word}`;
+            let word = card.word;
+            let audioImageId = `myImageForAudio-${word}`;
+            let audioId = `myAudio-${word}`;
+            let cardsRotateId = `rotateId-${word}`;
             //let containerRotate = `containerRotate-${card.word}`;
-            let cardItemId = `card-${card.word}`;
-            let imageId = `image-${card.word}`;
+            let cardItemId = `card-${word}`;
+            let imageId = `image-${word}`;
             cardsItem.classList.add('cardsItem');
             if (getCurrentMode() === "play") {
                cardsItem.classList.add("collapsed")
@@ -156,7 +165,7 @@ function renderCards(sectionIndex) {
                             <audio id="${audioId}">
                                 <source src="assets/${card.audioSrc}" type="audio/mp3">
                             </audio>
-                            <div class="cardsTitleOne">${card.word}</div>
+                            <div class="cardsTitleOne">${word}</div>
                             <div class="infoBtn">
                                 <img id="${cardsRotateId}" src="assets/img/rotate.png" width="30px" height="30px">
                             </div>
@@ -177,7 +186,10 @@ function renderCards(sectionIndex) {
             `
             cardsContainer.append(cardsItem);
             document.getElementById(cardsRotateId).addEventListener('click',
-                () => document.getElementById(cardItemId).classList.add("rotate"));
+                () => {
+                    increaseStatistic(categoryTitle, word, 'trained');
+                    document.getElementById(cardItemId).classList.add("rotate");
+                });
             document.getElementById(cardsRotateId + "-back").addEventListener('click',
                 () => document.getElementById(cardItemId).classList.remove("rotate"));
             document.getElementById(audioImageId).addEventListener('click',
@@ -185,7 +197,7 @@ function renderCards(sectionIndex) {
             document.getElementById(imageId).addEventListener('click', (event) => {
                 let cardItem = event.target.closest(".cardsItem");
                 if (lastWord != null && !cardItem.classList.contains("inactiveCard")) {
-                    checkUserChoiceForWord(card);
+                    checkUserChoiceForWord(categoryTitle, card);
                 }
             });
         }
@@ -282,21 +294,27 @@ function playNextCard() {
 }
 
 function showPopupCorrect() {
+    overlay.style.display = 'block';
     blockPopupCorrect.classList.remove('hidden');
     musicSuccess.play();
     setTimeout(function () {
         blockPopupCorrect.classList.add('hidden');
+        overlay.style.display = 'none';
         window.location.href = '#';
     }, 3000);
+
 }
 
 function showPopupWrong() {
+    overlay.style.display = 'block';
     blockPopupWrong.classList.remove('hidden');
     musicFailure.play();
     setTimeout(function () {
         blockPopupWrong.classList.add('hidden');
+        overlay.style.display = 'none';
         window.location.href = '#';
     },3000);
+
 }
 
 function finishGame() {

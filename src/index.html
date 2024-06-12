@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
           rel="stylesheet">
-</head>
 <body>
 <div class="wrapperPopup hidden">
     <div class="blockPopup">
@@ -56,16 +55,14 @@
     <div class="menu">
         <nav>
             <ul class="listItem">
-                <li class="menuItem"><a class="menuLink actionA" href="#">Main</a></li>
-                <hr>
+                <li class="menuItem"><a  style="font-weight:bold" class="menuLink actionA" href="#">Main</a></li>
                 <li class="menuItem"><a class="menuLink actionA" href="#section-0">Action (set A)</a></li>
                 <li class="menuItem"><a class="menuLink actionB" href="#section-1">Action (set B)</a></li>
                 <li class="menuItem"><a class="menuLink animalA" href="#section-2">Animal (set A)</a></li>
                 <li class="menuItem"><a class="menuLink animalB" href="#section-3">Animal (set B)</a></li>
                 <li class="menuItem"><a class="menuLink clothes" href="#section-4">Clothes</a></li>
                 <li class="menuItem"><a class="menuLink emotions" href="#section-5">Emotions</a></li>
-                <hr>
-                <li class="menuItem"><a class="menuLink statistics" href="#statistics">Statistics</a></li>
+                <li class="menuItem"><a style="font-weight:bold"  id = "statistic" class="menuLink statistics" href="#statistics">Statistics</a></li>
             </ul>
         </nav>
     </div>
@@ -93,6 +90,31 @@
     </div>
     <div class="cardsContainer">
         <!-- cards will be generated here -->
+    </div>
+    <!-- statistic -->
+    <div class="wrapperStatistic hidden">
+    <div class="btnForStatistic">
+    <button>Train hard words</button>
+    <button>Delete all statistic </button>
+    </div>
+    <div class="blockTable">
+        <table class="startTable">
+            <thead>
+            <tr>
+                <th>Categories</th>
+                <th>Words</th>
+                <th>Translation</th>
+                <th>Trained</th>
+                <th>Correct</th>
+                <th>Incorrect</th>
+                <th>%</th>
+            </tr>
+            </thead>
+            <tbody class="bodyTable">
+            <!-- -->
+            </tbody>
+        </table>
+    </div>
     </div>
     <audio id="audioRight">
         <source src="assets/audio/correct.mp3" type="audio/mp3">
