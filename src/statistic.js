@@ -9,6 +9,25 @@ import cardsMappings from "./cards";
 const cardsContainer = document.querySelector('.cardsContainer');
 let bodyTable = document.querySelector('.bodyTable');
 let wrapperStatistic = document.querySelector('.wrapperStatistic');
+let playPanel = document.querySelector('.playPanel');
+
+
+document.querySelector('.btnDeleteStat').addEventListener('click', clearStatistics);
+
+function clearStatistics() {
+    let statistic = JSON.parse(localStorage.getItem('statistic'));
+    for (let categoryName in statistic) {
+        let category = statistic[categoryName];
+        for (let cardName in category) {
+            let card = category[cardName];
+            card.trained = 0;
+            card.correct = 0;
+            card.incorrect = 0;
+        }
+    }
+    localStorage.setItem('statistic', JSON.stringify(statistic));
+    renderStatistics();
+}
 
 
 function openStatistic() {
@@ -20,9 +39,12 @@ export function closeStatistic() {
 }
 
 export function renderStatistics() {
-    cardsContainer.innerHTML = '';
+    cardsContainer.classList.add('hidden');
+    playPanel.classList.remove('enable');
+    bodyTable.innerHTML = '';
     openStatistic();
     let statistic = JSON.parse(localStorage.getItem('statistic'));
+    // сортировка здесь
     for (let categoryName in statistic) {
         let category = statistic[categoryName];
         for (let cardName in category) {

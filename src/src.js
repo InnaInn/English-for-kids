@@ -96,6 +96,7 @@ function renderContent() {
 
 function renderSections() {
     cardsContainer.innerHTML = '';
+    cardsContainer.classList.remove('hidden');
     for (let i = 0; i < cardsMappings.length; i++) {
         let mapping = cardsMappings[i]
         let cardsItem = document.createElement('div');
@@ -135,6 +136,7 @@ function checkUserChoiceForWord(categoryTitle, card) {
 }
 
 function renderCards(sectionIndex) {
+    cardsContainer.classList.remove('hidden');
     cardsContainer.innerHTML = '';
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
         let categoryTitle = cardsMappings[sectionIndex].title;
