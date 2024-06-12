@@ -783,7 +783,7 @@ body.alternate-background {
     width: 90px;
     height: 185px;
     position: fixed;
-    z-index: 10;
+    z-index: 9;
     top: 150px;
     right: -120px;
     border-top-left-radius: 20px;
@@ -897,4 +897,59 @@ body.alternate-background {
     font-family: "Poppins", sans-serif;
     font-size: 25px;
     color: white;
+}
+
+
+table, th, td {
+    border: 1px solid white;
+}
+.blockTable{
+    overflow-x: auto;
+    width: 100%;
+}
+
+.startTable{
+    width: 100%;
+    min-width: 550px;
+    background: rgba(199,251,255,0.18824);
+    cursor: default;
+    position: relative;
+    border-collapse: collapse;
+}
+
+.startTable tr{
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    color: white;
+    line-height: 2rem;
+    text-transform: capitalize;
+}
+
+.startTable th {
+    color: #f7ffff;
+    background: #f64c72;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-shadow: 1px 1px 2px #6d5bbe;
+    cursor: pointer;
+    position: sticky;
+    top: 0;
+    width: 50px;
+}
+
+
+.startTable th:after {
+    content: "⬍";
+    padding-left: 5px;
+}
+.startTable th.asc:after {
+    content: "⬆";
+}
+.startTable th.desc:after {
+    content: "⬇";
+}
+
+.hidden {
+    display: none;
 }
