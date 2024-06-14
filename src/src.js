@@ -44,6 +44,7 @@ function toggleMenu() {
 function closeMenu() {
     menu.classList.remove('active');
     menuBtn.classList.remove('active');
+
 }
 
 function openPlayPanel() {

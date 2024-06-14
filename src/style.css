@@ -36,7 +36,7 @@ h1{
 .menu-btn {
     width: 40px;
     height: 40px;
-    position: fixed;
+    position: absolute;
     overflow: hidden;
     cursor: pointer;
     left: 13%;
