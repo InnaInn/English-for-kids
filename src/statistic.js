@@ -11,73 +11,7 @@ let bodyTable = document.querySelector('.bodyTable');
 let wrapperStatistic = document.querySelector('.wrapperStatistic');
 let playPanel = document.querySelector('.playPanel');
 
-
-
 document.querySelector('.btnDeleteStat').addEventListener('click', clearStatistics);
-document.getElementById('percent').addEventListener('click', () => renderStatistics((a, b) => {
-    if (a.percent > b.percent) {
-        return -1;
-    }
-    if (a.percent < b.percent) {
-        return  1;
-    }
-    return 0;
-}));
-document.getElementById('incorrect').addEventListener('click', () => renderStatistics((a, b) => {
-    if (a.incorrect > b.incorrect) {
-        return -1;
-    }
-    if (a.incorrect < b.incorrect) {
-        return  1;
-    }
-    return 0;
-}));
-document.getElementById('correct').addEventListener('click', () => renderStatistics((a, b) => {
-    if (a.correct > b.correct) {
-        return -1;
-    }
-    if (a.correct < b.correct) {
-        return  1;
-    }
-    return 0;
-}));
-document.getElementById('trained').addEventListener('click', () => renderStatistics((a, b) => {
-    if (a.trained > b.trained) {
-        return -1;
-    }
-    if (a.trained < b.trained) {
-        return  1;
-    }
-    return 0;
-}));
-document.getElementById('translation').addEventListener('click', () => renderStatistics((a, b) => {
-    if (a.translation > b.translation) {
-        return 1;
-    }
-    if (a.translation < b.translation) {
-        return  -1;
-    }
-    return 0;
-}));
-document.getElementById('words').addEventListener('click', () => renderStatistics((a, b) => {
-    if (a.words > b.words) {
-        return 1;
-    }
-    if (a.words < b.words) {
-        return  -1;
-    }
-    return 0;
-}));
-document.getElementById('categories').addEventListener('click', () => renderStatistics((a, b) => {
-    if (a.categories > b.categories) {
-        return 1;
-    }
-    if (a.categories < b.categories) {
-        return  -1;
-    }
-    return 0;
-}));
-
 
 function clearStatistics() {
     let statistic = JSON.parse(localStorage.getItem('statistic'));
@@ -93,7 +27,6 @@ function clearStatistics() {
     localStorage.setItem('statistic', JSON.stringify(statistic));
     renderStatistics();
 }
-
 
 function openStatistic() {
     wrapperStatistic.classList.remove('hidden');
@@ -124,7 +57,6 @@ export function renderStatistics(sortFunction) {
         `;
     }
 }
-
 
 function getStatisticItems() {
     let items = [];
@@ -178,3 +110,57 @@ export function increaseStatistic(category, word, type) {
     statistic[category][word][type]++;
     localStorage.setItem('statistic', JSON.stringify(statistic));
 }
+
+function resetSortClasses() {
+    document.querySelectorAll('.startTable th').forEach(th => {
+        th.classList.remove('asc', 'desc');
+    });
+}
+
+function setSortClass(element, isAscending) {
+    resetSortClasses();
+    element.classList.add(isAscending ? 'asc' : 'desc');
+}
+
+document.getElementById('categories').addEventListener('click', () => {
+    let isAscending = document.getElementById('categories').classList.contains('asc');
+    setSortClass(document.getElementById('categories'), !isAscending);
+    renderStatistics((a, b) => a.category.localeCompare(b.category) * (isAscending ? -1 : 1));
+});
+
+document.getElementById('words').addEventListener('click', () => {
+    let isAscending = document.getElementById('words').classList.contains('asc');
+    setSortClass(document.getElementById('words'), !isAscending);
+    renderStatistics((a, b) => a.word.localeCompare(b.word) * (isAscending ? -1 : 1));
+});
+
+document.getElementById('translation').addEventListener('click', () => {
+    let isAscending = document.getElementById('translation').classList.contains('asc');
+    setSortClass(document.getElementById('translation'), !isAscending);
+    renderStatistics((a, b) => a.translation.localeCompare(b.translation) * (isAscending ? -1 : 1));
+});
+
+document.getElementById('trained').addEventListener('click', () => {
+    let isAscending = document.getElementById('trained').classList.contains('asc');
+    setSortClass(document.getElementById('trained'), !isAscending);
+    renderStatistics((a, b) => (a.trained - b.trained) * (isAscending ? -1 : 1));
+});
+
+document.getElementById('correct').addEventListener('click', () => {
+    let isAscending = document.getElementById('correct').classList.contains('asc');
+    setSortClass(document.getElementById('correct'), !isAscending);
+    renderStatistics((a, b) => (a.correct - b.correct) * (isAscending ? -1 : 1));
+});
+
+document.getElementById('incorrect').addEventListener('click', () => {
+    let isAscending = document.getElementById('incorrect').classList.contains('asc');
+    setSortClass(document.getElementById('incorrect'), !isAscending);
+    renderStatistics((a, b) => (a.incorrect - b.incorrect) * (isAscending ? -1 : 1));
+});
+
+
+document.getElementById('percent').addEventListener('click', () => {
+    let isAscending = document.getElementById('percent').classList.contains('asc');
+    setSortClass(document.getElementById('percent'), !isAscending);
+    renderStatistics((a, b) => (a.percent - b.percent) * (isAscending ? -1 : 1));
+});

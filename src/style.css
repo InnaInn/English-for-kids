@@ -18,7 +18,7 @@ body.alternate-background {
     margin: 40px auto 0;
 }
 
-h1{
+h1 {
     margin-left: 400px;
 }
 
@@ -30,7 +30,6 @@ h1{
     text-shadow: 0 3px 3px #30296f;
     transition: 0.3s ease;
     text-decoration: none;
-
 }
 
 .menu-btn {
@@ -65,8 +64,8 @@ h1{
     top: calc(50% + 10px);
 }
 
-.listItem{
-   padding: 30px 0 0 10px;
+.listItem {
+    padding: 30px 0 0 10px;
 }
 
 .menu {
@@ -111,8 +110,6 @@ h1{
     height: 60px;
 }
 
-
-
 .menuLink {
     color: white;
     text-decoration: none;
@@ -150,7 +147,6 @@ h1{
     background-color: #f64c72;
     transition: .4s;
     border-radius: 50px;
-
 }
 
 .slider:before {
@@ -173,8 +169,6 @@ h1{
     transform: translateX(70px);
 }
 
-
-/* Добавленные стили для текста */
 .text {
     color: white;
     position: absolute;
@@ -203,6 +197,7 @@ h1{
 #switchInput:checked + .slider + .on + .off {
     opacity: 0;
 }
+
 .openStats {
     text-align: center;
     line-height: 2.6rem;
@@ -221,11 +216,9 @@ h1{
     text-decoration: none;
 }
 
-
-.mainContainer{
-	width: 85vw;
+.mainContainer {
+    width: 85vw;
     margin: 0 auto;
-    margin-top: 20px;
     max-width: 1399px;
 }
 
@@ -262,7 +255,7 @@ h1{
     visibility: hidden;
 }
 
-.cardsItem:hover{
+.cardsItem:hover {
     box-shadow: 5px 6px 17px #24d7f7;
 }
 
@@ -278,7 +271,7 @@ h1{
     border-radius: 5px;
 }
 
-.linkCard{
+.linkCard {
     text-decoration: none;
 }
 
@@ -358,7 +351,7 @@ h1{
     padding: 10px 5px 5px 5px;
 }
 
-.blockPopup{
+.blockPopup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -372,20 +365,19 @@ h1{
     width: 500px;
 }
 
-.headerPopup{
+.headerPopup {
     font-family: 'Pacifico', cursive;
     font-size: 24px;
     color: white;
-
 }
 
-.textPopup{
+.textPopup {
     font-family: "Poppins", sans-serif;
     font-size: 20px;
     color: white;
 }
 
-.btnClosePopup{
+.btnClosePopup {
     line-height: 2.6rem;
     display: block;
     height: 43px;
@@ -397,20 +389,19 @@ h1{
     color: #ffffff;
     font-family: "Poppins", sans-serif;
     cursor: pointer;
-
 }
-.labelTextPopup{
+
+.labelTextPopup {
     font-family: "Poppins", sans-serif;
     font-size: 18px;
     color: white;
 }
 
-.btnPop{
+.btnPop {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
-
 
 .hidden {
     visibility: hidden;
@@ -427,7 +418,7 @@ h1{
     display: none;
 }
 
-.playPanel{
+.playPanel {
     width: 90px;
     height: 185px;
     position: fixed;
@@ -450,7 +441,6 @@ h1{
     right: 0;
 }
 
-
 .startGame {
     background-image: url(https://svgshare.com/i/KDD.svg);
     background-color: #6c5abf;
@@ -465,11 +455,13 @@ h1{
     background-color: gray;
     pointer-events: none;
 }
+
 .startGame.disabled {
     background-color: gray;
     pointer-events: none;
 }
-.startGame, .repeatSound{
+
+.startGame, .repeatSound {
     width: 60px;
     height: 60px;
     border: none;
@@ -479,12 +471,12 @@ h1{
     background-repeat: no-repeat;
     background-size: 35px;
     background-position: center;
-    box-shadow: 0px 4px #4a3d82;
+    box-shadow: 0 4px #4a3d82;
     cursor: pointer;
     transition: 0.3s ease;
 }
 
-.stars{
+.stars {
     height: 30px;
     width: 100%;
     max-width: 1200px;
@@ -493,14 +485,13 @@ h1{
     justify-content: flex-end;
     overflow-x: hidden;
     padding-top: 12px;
-
 }
 
-.wrongAnswer{
+.wrongAnswer {
     background-image: url(https://svgshare.com/i/KD3.svg)
 }
 
-.correctAnswer{
+.correctAnswer {
     background-image: url(https://svgshare.com/i/KCh.svg);
 }
 
@@ -534,16 +525,14 @@ h1{
     width: 600px;
 }
 
-.headerPopupCorrect, .headerPopupWrong{
+.headerPopupCorrect, .headerPopupWrong {
     font-family: 'Pacifico', cursive;
     font-size: 48px;
     color: white;
-
 }
 
-.textPopupCorrect, .textPopupWrong{
+.textPopupCorrect, .textPopupWrong {
     font-family: "Poppins", sans-serif;
     font-size: 25px;
     color: white;
 }
-
