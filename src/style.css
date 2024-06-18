@@ -18,6 +18,10 @@ body.alternate-background {
     margin: 40px auto 0;
 }
 
+h1 {
+    margin-left: 400px;
+}
+
 .headerLogo a {
     font-family: 'Pacifico', cursive;
     font-weight: normal;
@@ -26,17 +30,16 @@ body.alternate-background {
     text-shadow: 0 3px 3px #30296f;
     transition: 0.3s ease;
     text-decoration: none;
-
 }
 
 .menu-btn {
     width: 40px;
     height: 40px;
-    position: relative;
+    position: absolute;
     overflow: hidden;
     cursor: pointer;
-    left: 7%;
-    bottom: -15%;
+    left: 13%;
+    bottom: 86%;
     z-index: 3;
 }
 
@@ -61,8 +64,8 @@ body.alternate-background {
     top: calc(50% + 10px);
 }
 
-.listItem{
-   padding: 30px 0 0 10px;
+.listItem {
+    padding: 30px 0 0 10px;
 }
 
 .menu {
@@ -107,8 +110,6 @@ body.alternate-background {
     height: 60px;
 }
 
-
-
 .menuLink {
     color: white;
     text-decoration: none;
@@ -146,7 +147,6 @@ body.alternate-background {
     background-color: #f64c72;
     transition: .4s;
     border-radius: 50px;
-
 }
 
 .slider:before {
@@ -169,8 +169,6 @@ body.alternate-background {
     transform: translateX(70px);
 }
 
-
-/* Добавленные стили для текста */
 .text {
     color: white;
     position: absolute;
@@ -199,6 +197,7 @@ body.alternate-background {
 #switchInput:checked + .slider + .on + .off {
     opacity: 0;
 }
+
 .openStats {
     text-align: center;
     line-height: 2.6rem;
@@ -217,11 +216,9 @@ body.alternate-background {
     text-decoration: none;
 }
 
-
-.mainContainer{
-	width: 85vw;
+.mainContainer {
+    width: 85vw;
     margin: 0 auto;
-    margin-top: 20px;
     max-width: 1399px;
 }
 
@@ -258,7 +255,7 @@ body.alternate-background {
     visibility: hidden;
 }
 
-.cardsItem:hover{
+.cardsItem:hover {
     box-shadow: 5px 6px 17px #24d7f7;
 }
 
@@ -274,7 +271,7 @@ body.alternate-background {
     border-radius: 5px;
 }
 
-.linkCard{
+.linkCard {
     text-decoration: none;
 }
 
@@ -354,7 +351,7 @@ body.alternate-background {
     padding: 10px 5px 5px 5px;
 }
 
-.blockPopup{
+.blockPopup {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -368,20 +365,19 @@ body.alternate-background {
     width: 500px;
 }
 
-.headerPopup{
+.headerPopup {
     font-family: 'Pacifico', cursive;
     font-size: 24px;
     color: white;
-
 }
 
-.textPopup{
+.textPopup {
     font-family: "Poppins", sans-serif;
     font-size: 20px;
     color: white;
 }
 
-.btnClosePopup{
+.btnClosePopup {
     line-height: 2.6rem;
     display: block;
     height: 43px;
@@ -393,20 +389,19 @@ body.alternate-background {
     color: #ffffff;
     font-family: "Poppins", sans-serif;
     cursor: pointer;
-
 }
-.labelTextPopup{
+
+.labelTextPopup {
     font-family: "Poppins", sans-serif;
     font-size: 18px;
     color: white;
 }
 
-.btnPop{
+.btnPop {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
-
 
 .hidden {
     visibility: hidden;
@@ -423,7 +418,7 @@ body.alternate-background {
     display: none;
 }
 
-.playPanel{
+.playPanel {
     width: 90px;
     height: 185px;
     position: fixed;
@@ -446,7 +441,6 @@ body.alternate-background {
     right: 0;
 }
 
-
 .startGame {
     background-image: url(https://svgshare.com/i/KDD.svg);
     background-color: #6c5abf;
@@ -461,11 +455,13 @@ body.alternate-background {
     background-color: gray;
     pointer-events: none;
 }
+
 .startGame.disabled {
     background-color: gray;
     pointer-events: none;
 }
-.startGame, .repeatSound{
+
+.startGame, .repeatSound {
     width: 60px;
     height: 60px;
     border: none;
@@ -475,12 +471,12 @@ body.alternate-background {
     background-repeat: no-repeat;
     background-size: 35px;
     background-position: center;
-    box-shadow: 0px 4px #4a3d82;
+    box-shadow: 0 4px #4a3d82;
     cursor: pointer;
     transition: 0.3s ease;
 }
 
-.stars{
+.stars {
     height: 30px;
     width: 100%;
     max-width: 1200px;
@@ -489,14 +485,13 @@ body.alternate-background {
     justify-content: flex-end;
     overflow-x: hidden;
     padding-top: 12px;
-
 }
 
-.wrongAnswer{
+.wrongAnswer {
     background-image: url(https://svgshare.com/i/KD3.svg)
 }
 
-.correctAnswer{
+.correctAnswer {
     background-image: url(https://svgshare.com/i/KCh.svg);
 }
 
@@ -530,16 +525,14 @@ body.alternate-background {
     width: 600px;
 }
 
-.headerPopupCorrect, .headerPopupWrong{
+.headerPopupCorrect, .headerPopupWrong {
     font-family: 'Pacifico', cursive;
     font-size: 48px;
     color: white;
-
 }
 
-.textPopupCorrect, .textPopupWrong{
+.textPopupCorrect, .textPopupWrong {
     font-family: "Poppins", sans-serif;
     font-size: 25px;
     color: white;
 }
-

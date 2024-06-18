@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="EN">
 <head>
     <title>English for kids</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,15 +29,18 @@
 <div class="wrapperPopupWrong hidden ">
     <div class="blockPopupWrong">
         <h3 class="headerPopupWrong">Oh no.....</h3>
-        <p class="textPopupWrong">Number of mistakes: <span id="numberOfErrors" ><!-- number of errors to be set --></span></p>
-        <img src="assets/img/failure.png"  width="320px" height="300px" alt="smile">
+        <p class="textPopupWrong">Number of mistakes: <span
+                id="numberOfErrors"><!-- number of errors to be set --></span></p>
+        <!--suppress CheckImageSize -->
+        <img src="assets/img/failure.png" width="320px" height="300px" alt="smile">
     </div>
 </div>
 <div class="wrapperPopupCorrect hidden">
     <div class="blockPopupCorrect">
         <h3 class="headerPopupCorrect">You've won!</h3>
         <p class="textPopupCorrect">Congratulations!</p>
-        <img src="assets/img/success.png"  width="320px" height="250px" alt="smile">
+        <!--suppress CheckImageSize -->
+        <img src="assets/img/success.png" width="320px" height="250px" alt="smile">
     </div>
 </div>
 <audio id="musicSuccess">
@@ -55,14 +58,38 @@
     <div class="menu">
         <nav>
             <ul class="listItem">
-                <li class="menuItem"><a  style="font-weight:bold" class="menuLink actionA" href="#">Main</a></li>
-                <li class="menuItem"><a class="menuLink actionA" href="#section-0">Action (set A)</a></li>
-                <li class="menuItem"><a class="menuLink actionB" href="#section-1">Action (set B)</a></li>
-                <li class="menuItem"><a class="menuLink animalA" href="#section-2">Animal (set A)</a></li>
-                <li class="menuItem"><a class="menuLink animalB" href="#section-3">Animal (set B)</a></li>
-                <li class="menuItem"><a class="menuLink clothes" href="#section-4">Clothes</a></li>
-                <li class="menuItem"><a class="menuLink emotions" href="#section-5">Emotions</a></li>
-                <li class="menuItem"><a style="font-weight:bold"  id = "statistic" class="menuLink statistics" href="#statistics">Statistics</a></li>
+                <li class="menuItem">
+                    <a style="font-weight:bold" class="menuLink actionA" href="#">Main</a>
+                </li>
+                <li class="menuItem">
+                    <!--suppress HtmlUnknownAnchorTarget -->
+                    <a class="menuLink actionA" href="#section-0">Action (set A)</a>
+                </li>
+                <li class="menuItem">
+                    <!--suppress HtmlUnknownAnchorTarget -->
+                    <a class="menuLink actionB" href="#section-1">Action (set B)</a>
+                </li>
+                <li class="menuItem">
+                    <!--suppress HtmlUnknownAnchorTarget -->
+                    <a class="menuLink animalA" href="#section-2">Animal (set A)</a>
+                </li>
+                <li class="menuItem">
+                    <!--suppress HtmlUnknownAnchorTarget -->
+                    <a class="menuLink animalB" href="#section-3">Animal (set B)</a>
+                </li>
+                <li class="menuItem">
+                    <!--suppress HtmlUnknownAnchorTarget -->
+                    <a class="menuLink clothes" href="#section-4">Clothes</a>
+                </li>
+                <li class="menuItem">
+                    <!--suppress HtmlUnknownAnchorTarget -->
+                    <a class="menuLink emotions" href="#section-5">Emotions</a>
+                </li>
+                <li class="menuItem">
+                    <!--suppress HtmlUnknownAnchorTarget -->
+                    <a style="font-weight:bold" id="statistic" class="menuLink statistics"
+                       href="#statistics">Statistics</a>
+                </li>
             </ul>
         </nav>
     </div>
@@ -93,28 +120,29 @@
     </div>
     <!-- statistic -->
     <div class="wrapperStatistic hidden">
-    <div class="btnForStatistic">
-    <button>Train hard words</button>
-    <button>Delete all statistic </button>
-    </div>
-    <div class="blockTable">
-        <table class="startTable">
-            <thead>
-            <tr>
-                <th>Categories</th>
-                <th>Words</th>
-                <th>Translation</th>
-                <th>Trained</th>
-                <th>Correct</th>
-                <th>Incorrect</th>
-                <th>%</th>
-            </tr>
-            </thead>
-            <tbody class="bodyTable">
-            <!-- -->
-            </tbody>
-        </table>
-    </div>
+        <div class="btnForStatistic">
+            <!--suppress HtmlUnknownAnchorTarget -->
+            <a class="startDifficultWords" href="#hardWords">Train hard words</a>
+            <button class="btnDeleteStat">Delete all statistic</button>
+        </div>
+        <div class="blockTable">
+            <table class="startTable">
+                <thead>
+                <tr>
+                    <th id="categories">Categories</th>
+                    <th id="words">Words</th>
+                    <th id="translation">Translation</th>
+                    <th id="trained">Trained</th>
+                    <th id="correct">Correct</th>
+                    <th id="incorrect">Incorrect</th>
+                    <th id="percent">%</th>
+                </tr>
+                </thead>
+                <tbody class="bodyTable">
+                <!-- -->
+                </tbody>
+            </table>
+        </div>
     </div>
     <audio id="audioRight">
         <source src="assets/audio/correct.mp3" type="audio/mp3">
