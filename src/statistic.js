@@ -13,6 +13,35 @@ let playPanel = document.querySelector('.playPanel');
 
 document.querySelector('.btnDeleteStat').addEventListener('click', clearStatistics);
 
+function findCard(categoryName, cardName) {
+    for (let category of cardsMappings) {
+        if(category.title === categoryName){
+            for (let item of category.items) {
+                if (item.word === cardName) {
+                    return item;
+                }
+            }
+        }
+    }
+}
+
+export function getDifficultWords() {
+    let difficultWords = [];
+    let statistic = JSON.parse(localStorage.getItem('statistic'));
+    for (let categoryName in statistic) {
+        let category = statistic[categoryName];
+        for (let cardName in category) {
+            let card = category[cardName];
+            if (card.incorrect > 0) {
+                console.log(categoryName + " " +  cardName);
+                let difficultWord = findCard(categoryName, cardName);
+                difficultWords.push({category: categoryName, card: difficultWord});
+            }
+        }
+    }
+    return difficultWords;
+}
+
 function clearStatistics() {
     let statistic = JSON.parse(localStorage.getItem('statistic'));
     for (let categoryName in statistic) {

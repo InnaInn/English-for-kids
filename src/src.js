@@ -6,7 +6,7 @@ import './statistic.js';
 import './cards.js';
 import "@babel/polyfill";
 import cardsMappings from "./cards";
-import {increaseStatistic, renderStatistics, closeStatistic} from './statistic.js'
+import {increaseStatistic, renderStatistics, closeStatistic, getDifficultWords} from './statistic.js'
 
 let menuBtn = document.querySelector('.menu-btn');
 let menu = document.querySelector('.menu');
@@ -78,16 +78,27 @@ function renderContent() {
     if (hash.startsWith('#section-')) {
         let sectionIndex = hash.substring(9);
         renderCards(sectionIndex);
-        if (getCurrentMode() === "play") {
-            openPlayPanel();
-        }
         closeStatistic();
     } else if (hash.startsWith('#statistics')) {
         renderStatistics();
+    } else if (hash.startsWith('#hardWords')) {
+        renderHardCards();
+        closeStatistic();
     } else {
         renderSections();
         removePlayPanel();
         closeStatistic();
+    }
+}
+
+function renderHardCards() {
+    if (getCurrentMode() === "play") {
+        openPlayPanel();
+    }
+    cardsContainer.classList.remove('hidden');
+    cardsContainer.innerHTML = '';
+    for (let item of getDifficultWords()) {
+        renderOneCard(item.card, item.category);
     }
 }
 
@@ -197,6 +208,9 @@ function renderOneCard(card, categoryTitle) {
 }
 
 function renderCards(sectionIndex) {
+    if (getCurrentMode() === "play") {
+        openPlayPanel();
+    }
     cardsContainer.classList.remove('hidden');
     cardsContainer.innerHTML = '';
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
