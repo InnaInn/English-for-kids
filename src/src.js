@@ -95,10 +95,24 @@ function renderHardCards() {
     if (getCurrentMode() === "play") {
         openPlayPanel();
     }
+
+    let difficultWords = getDifficultWords();
     cardsContainer.classList.remove('hidden');
-    cardsContainer.innerHTML = '';
-    for (let item of getDifficultWords()) {
-        renderOneCard(item.card, item.category);
+    if (difficultWords.length === 0) {
+        removePlayPanel();
+        cardsContainer.innerHTML = `
+                 <div class="blockDifficultWords">
+                <p class="textEmptyField">You don't have the words to repeat!</p>
+                <img src="assets/img/noWords.png" alt="smile" width="400px" height="300px">
+                </div>
+`
+    } else {
+        cardsContainer.innerHTML = '';
+        renderedCards = [];
+        for (let item of difficultWords) {
+            renderOneCard(item.card, item.category);
+            renderedCards.push(item.card);
+        }
     }
 }
 
@@ -207,6 +221,8 @@ function renderOneCard(card, categoryTitle) {
     });
 }
 
+let renderedCards;
+
 function renderCards(sectionIndex) {
     if (getCurrentMode() === "play") {
         openPlayPanel();
@@ -215,7 +231,8 @@ function renderCards(sectionIndex) {
     cardsContainer.innerHTML = '';
     if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
         let categoryTitle = cardsMappings[sectionIndex].title;
-        for (let card of cardsMappings[sectionIndex].items) {
+        renderedCards = cardsMappings[sectionIndex].items;
+        for (let card of renderedCards) {
             renderOneCard(card, categoryTitle);
         }
     } else {
@@ -232,7 +249,7 @@ window.addEventListener('hashchange', () => {
 
 function isSectionPageOpen() {
     let hash = window.location.hash;
-    return hash.startsWith('#section-')
+    return hash.startsWith('#section-') || hash.startsWith('#hardWords');
 }
 
 function infoPopupShouldBeShown() {
@@ -291,11 +308,7 @@ let currentGameCards;
 
 function startGame() {
     errors = 0;
-    let hash = window.location.hash;
-    let sectionIndex = hash.substring(9);
-    if (sectionIndex >= 0 && sectionIndex < cardsMappings.length) {
-        currentGameCards = Array.from(cardsMappings[sectionIndex].items);
-    }
+    currentGameCards = Array.from(renderedCards);
     startGameBtn.classList.add('disabled');
     repeatSoundBtn.classList.remove('disabled');
     continueGame();

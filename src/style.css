@@ -536,3 +536,12 @@ h1 {
     font-size: 25px;
     color: white;
 }
+.blockDifficultWords  {
+    text-align: center;
+
+}
+.textEmptyField {
+    font-family: "Poppins", sans-serif;
+    font-size: 30px;
+    color: white;
+}

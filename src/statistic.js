@@ -32,8 +32,7 @@ export function getDifficultWords() {
         let category = statistic[categoryName];
         for (let cardName in category) {
             let card = category[cardName];
-            if (card.incorrect > 0) {
-                console.log(categoryName + " " +  cardName);
+            if (card.incorrect > 0 && difficultWords.length < 8) {
                 let difficultWord = findCard(categoryName, cardName);
                 difficultWords.push({category: categoryName, card: difficultWord});
             }
@@ -110,7 +109,7 @@ class StatisticItem {
         this.correct = wordStatistic.correct;
         let totalAnswers = this.correct + this.incorrect;
         if (totalAnswers !== 0) {
-            this.percent = 100 * this.correct / totalAnswers;
+            this.percent = Math.round(100 * this.correct / totalAnswers);
         } else {
             this.percent = 0;
         }
