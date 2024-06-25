@@ -333,6 +333,7 @@ function showPopupCorrect() {
         overlay.style.display = 'none';
         window.location.href = '#';
     }, 3000);
+
 }
 
 function showPopupWrong() {
@@ -344,6 +345,8 @@ function showPopupWrong() {
         overlay.style.display = 'none';
         window.location.href = '#';
     }, 3000);
+
+
 }
 
 function finishGame() {
