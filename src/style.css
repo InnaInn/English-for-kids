@@ -597,5 +597,18 @@ h1 {
     .cardsItem.collapsed {
         height: 162px;
     }
+    .imgSuccess{
+        width: 285px;
+        height: 230px;
+    }
+
+    .textPopupWrong {
+        font-size: 20px;
+    }
+
+    .imgFailure{
+        width: 290px;
+        height: 300px;
+    }
 
 }

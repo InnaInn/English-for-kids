@@ -328,14 +328,12 @@ function showPopupCorrect() {
     overlay.style.display = 'block';
     blockPopupCorrect.classList.remove('hidden');
     musicSuccess.play();
-    /*
     setTimeout(function () {
         blockPopupCorrect.classList.add('hidden');
         overlay.style.display = 'none';
         window.location.href = '#';
     }, 3000);
 
-     */
 }
 
 function showPopupWrong() {
@@ -347,6 +345,8 @@ function showPopupWrong() {
         overlay.style.display = 'none';
         window.location.href = '#';
     }, 3000);
+
+
 }
 
 function finishGame() {
