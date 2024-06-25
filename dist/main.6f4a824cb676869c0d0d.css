@@ -912,19 +912,20 @@ h1 {
     }
     .toggleButton{
         position: relative;
-        left: 180%;
+        left: 150%;
         bottom: 20px;
     }
     .menu  {
         width: 53%;
     }
 
-    .menu-btn{
-        left: 5%;
-        bottom: 89%;
-    }
     .menuItem {
         font-size: 1.2rem;
+    }
+
+    .menu-btn {
+        top: 25px;
+        left: 25%;
     }
 
     .cardsContainer {
@@ -948,6 +949,7 @@ h1 {
 
     .cardsItem {
         height: 227px;
+        width: 242px;
 
     }
     .cardsItem.collapsed {
